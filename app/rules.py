@@ -23,6 +23,12 @@ GUARANTEE_PATTERN = re.compile(
     re.IGNORECASE,
 )
 
+# Discounts and promotions: 90% off, 20 % discount, promo code, coupon, half price
+DISCOUNT_PATTERN = re.compile(
+    r"(\d{1,3}\s?%\s?(off|discount))|\b(discounts?|promo(tion)? codes?|coupons?|half[- ]price)\b",
+    re.IGNORECASE,
+)
+
 
 def check_no_prices(card: ServiceCard) -> list[str]:
     """Brand rule: no prices or amounts of money anywhere on a card."""
@@ -43,10 +49,20 @@ def check_no_guarantees(card: ServiceCard) -> list[str]:
     return violations
 
 
+def check_no_discounts(card: ServiceCard) -> list[str]:
+    """Brand rule: no discounts or promotions — the AI must never invent an offer."""
+    violations = []
+    for field in TEXT_FIELDS:
+        if DISCOUNT_PATTERN.search(getattr(card, field)):
+            violations.append(f"{field}: contains a discount — the AI must not invent offers")
+    return violations
+
+
 # Every rule the application enforces. Add new checks here.
 RULES = [
     check_no_prices,
     check_no_guarantees,
+    check_no_discounts,
 ]
 
 

@@ -47,3 +47,26 @@ def test_guarantee_is_rejected_in_every_text_field(field):
 def test_numbers_that_are_not_prices_are_allowed():
     ok = card(summary="Open every day from 7 to 21, with 12 quiet tables and 2 meeting rooms.")
     assert violations(ok) == []
+
+
+@pytest.mark.parametrize(
+    "summary",
+    [
+        "Get 90% off every tune-up this week only. Bring your bike in today.",
+        "Use promo code SPRING for your next repair and ride away the same day.",
+        "Half-price winter preparation for students who ride every single day.",
+    ],
+)
+def test_discount_is_rejected(summary):
+    assert any("discount" in v for v in violations(card(summary=summary)))
+
+
+@pytest.mark.parametrize(
+    "summary",
+    [
+        "Free advice and a quick safety check whenever you drop by the workshop.",
+        "We finish 95% of repairs on the same day, so you are back on the road fast.",
+    ],
+)
+def test_similar_text_without_a_discount_is_allowed(summary):
+    assert violations(card(summary=summary)) == []
