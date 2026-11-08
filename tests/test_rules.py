@@ -26,6 +26,11 @@ def test_price_in_summary_is_rejected(summary):
     assert any("price" in v for v in violations(card(summary=summary)))
 
 
+def test_price_in_title_is_rejected():
+    # Regression test added with the fix for Issue #1.
+    assert any("price" in v for v in violations(card(title="Tune-ups from 25 $ this week")))
+
+
 def test_price_in_cta_text_is_rejected():
     # Issue #1: a price on the button reached the website.
     assert any("price" in v for v in violations(card(cta_text="Only $19 a day!")))
