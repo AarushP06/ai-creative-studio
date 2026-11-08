@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Creative Studio</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#top">
+      <span class="brand-mark" id="brand-mark">M</span>
+      <span class="brand-name" id="brand-name">Your Business</span>
+    </a>
+    <nav class="nav">
+      <a href="#services">Services</a>
+      <a href="#visit">Plan your visit</a>
+      <a href="#lab">Studio Lab</a>
+    </nav>
+    <span class="mode-chip" id="mode-chip" title="Where service cards come from">● checking…</span>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-text">
+        <p class="kicker" id="brief-kicker">Local business</p>
+        <h1 id="brief-tagline">Edit business/brief.md to make this site yours.</h1>
+        <p class="lead">Every service card on this page is written by an AI model at run time —
+          and checked by our own Python code before you ever see it.</p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" id="generate-btn" type="button">
+            <span class="btn-icon" aria-hidden="true">✦</span>
+            <span class="btn-label">Generate a service card</span>
+          </button>
+          <a class="btn btn-ghost" href="#lab">How it works</a>
+        </div>
+      </div>
+      <div class="hero-art">
+        <img src="/static/img/workspace.svg" alt="Illustration of a bright, tidy workspace">
+      </div>
+    </section>
+
+    <section class="services" id="services">
+      <div class="section-head">
+        <h2>Services</h2>
+        <p>New cards appear here. Each one shows where it came from.</p>
+      </div>
+      <div class="card-grid" id="card-grid">
+        <div class="empty" id="empty-state">
+          <p>No cards yet.</p>
+          <p class="muted">Click <strong>Generate a service card</strong> to ask the model for one.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="visit" id="visit">
+      <div class="section-head">
+        <h2>Plan your visit</h2>
+        <p>Ask our visit assistant. It can check free times with a tool, then answers.</p>
+      </div>
+
+      <div class="lab-grid">
+        <div class="lab-panel">
+          <h3>Ask a question</h3>
+          <form id="ask-form" class="ask-form">
+            <input id="ask-input" maxlength="300" autocomplete="off"
+                   placeholder="e.g. Can I come on Thursday afternoon?" aria-label="Your question">
+            <button class="btn btn-dark" id="ask-btn" type="submit">Ask</button>
+          </form>
+          <div class="chips" id="ask-chips">
+            <button type="button" data-q="Are you free on Thursday?">Free on Thursday?</button>
+            <button type="button" data-q="What do you offer?">What do you offer?</button>
+            <button type="button" data-q="Do you sell pizza?">Do you sell pizza?</button>
+            <button type="button" data-q="Book me Thursday at 14:00">Book me Thursday 14:00</button>
+          </div>
+          <div class="answer" id="ask-answer" hidden>
+            <span class="source-badge" id="ask-source"></span>
+            <p id="ask-text"></p>
+          </div>
+          <p class="muted small">Runtime agent · <code>app/agent/</code> · reads <code>instructions.md</code>,
+            may call <code>check_availability</code>, limited by <code>permissions.py</code>.</p>
+        </div>
+
+        <div class="lab-panel">
+          <h3>Agent trace</h3>
+          <ol class="agent-trace" id="ask-trace">
+            <li class="trace-idle">Ask a question to see what the agent decides.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section class="lab" id="lab">
+      <div class="section-head">
+        <h2>Studio Lab</h2>
+        <p>The model proposes. Our code decides. Watch every step of the last request.</p>
+      </div>
+
+      <div class="lab-grid">
+        <div class="lab-panel">
+          <h3>Request</h3>
+          <label class="field">
+            <span>Response source</span>
+            <select id="source-select">
+              <option value="">Gemini API (live, or mock if unavailable)</option>
+            </select>
+          </label>
+          <label class="check">
+            <input type="checkbox" id="injected-check">
+            <span>Use the <em>untrusted</em> test brief (prompt-injection attempt)</span>
+          </label>
+          <button class="btn btn-dark" id="lab-run-btn" type="button">Run this request</button>
+          <p class="muted small">“Simulate” options skip the model and push a deliberately bad
+            response through the same validator.</p>
+        </div>
+
+        <div class="lab-panel">
+          <h3>Pipeline</h3>
+          <ol class="trace" id="trace">
+            <li class="trace-idle">Run a request to see the steps.</li>
+          </ol>
+          <div class="verdict" id="verdict" hidden></div>
+          <ul class="violations" id="violations"></ul>
+          <details class="raw" id="raw-box" hidden>
+            <summary>Raw model output</summary>
+            <pre id="raw-output"></pre>
+          </details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>AI Creative Studio · Applied AI Certificate · Level 1 · Session 3</span>
+    <span>Fictional business · synthetic content only</span>
+  </footer>
+
+  <div class="toast" id="toast" role="status" hidden></div>
+
+  <template id="card-template">
+    <article class="service-card">
+      <span class="source-badge"></span>
+      <img class="card-img" alt="">
+      <div class="card-body">
+        <span class="tone-chip"></span>
+        <h3 class="card-title"></h3>
+        <p class="card-summary"></p>
+        <button class="card-cta" type="button"></button>
+      </div>
+    </article>
+  </template>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+{
+  "version": "1.0",
+  "description": "Brand and content rules for AI-generated service cards. Single source of truth: used by the validator (app/rules.py) and by the MCP tool get_brand_rules.",
+  "card_limits": {
+    "title_max_chars": 60,
+    "summary_min_chars": 20,
+    "summary_max_chars": 160,
+    "cta_text_max_chars": 30
+  },
+  "allowed_values": {
+    "image": ["workspace", "growth", "community", "craft"],
+    "tone": ["friendly", "professional", "bold"],
+    "cta_action": ["book", "contact", "visit"]
+  },
+  "banned_content": {
+    "prices": "No prices or amounts of money in any text field (e.g. $19, 19 $, 25 dollars).",
+    "guarantees": "No guarantees or absolute claims (e.g. guaranteed, 100%, best in town, risk-free)."
+  },
+  "palette": {
+    "ink": "#1E2235",
+    "paper": "#FBF7F0",
+    "accent": "#E8603C",
+    "accent_soft": "#FCE3D9",
+    "support": "#2F8F83"
+  },
+  "voice": [
+    "Write for a busy visitor who decides in five seconds.",
+    "Use plain words; no jargon.",
+    "Never invent facts that are not in the business brief."
+  ]
+}
