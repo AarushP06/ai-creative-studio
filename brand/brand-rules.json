@@ -8,13 +8,27 @@
     "cta_text_max_chars": 30
   },
   "allowed_values": {
-    "image": ["workspace", "growth", "community", "craft"],
-    "tone": ["friendly", "professional", "bold"],
-    "cta_action": ["book", "contact", "visit"]
+    "image": [
+      "workspace",
+      "growth",
+      "community",
+      "craft"
+    ],
+    "tone": [
+      "friendly",
+      "professional",
+      "bold"
+    ],
+    "cta_action": [
+      "book",
+      "contact",
+      "visit"
+    ]
   },
   "banned_content": {
     "prices": "No prices or amounts of money in any text field (e.g. $19, 19 $, 25 dollars).",
-    "guarantees": "No guarantees or absolute claims (e.g. guaranteed, 100%, best in town, risk-free)."
+    "guarantees": "No guarantees or absolute claims (e.g. guaranteed, 100%, best in town, risk-free).",
+    "discounts": "No discounts or promotions (e.g. 90% off, promo code, coupon, half price)."
   },
   "palette": {
     "ink": "#1E2235",
