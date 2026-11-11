@@ -26,9 +26,12 @@ GUARANTEE_PATTERN = re.compile(
 
 def check_no_prices(card: ServiceCard) -> list[str]:
     """Brand rule: no prices or amounts of money anywhere on a card."""
-    if PRICE_PATTERN.search(card.summary):
-        return ["summary: contains a price — prices are not allowed on cards"]
-    return []
+    violations = []
+    for field in TEXT_FIELDS:
+        text = getattr(card, field)
+        if PRICE_PATTERN.search(text):
+            violations.append(f"{field}: contains a price — prices are not allowed on cards")
+    return violations
 
 
 def check_no_guarantees(card: ServiceCard) -> list[str]:
